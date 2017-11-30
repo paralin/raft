@@ -897,9 +897,9 @@ func (r *Raft) processLogs(index uint64, future *logFuture) {
 			l := new(Log)
 			if err := r.logs.GetLog(idx, l); err != nil {
 				r.logger.Printf("[ERR] raft: Failed to get log at %d: %v", idx, err)
-				panic(err)
+			} else {
+				r.processLog(l, nil)
 			}
-			r.processLog(l, nil)
 		}
 
 		// Update the lastApplied index and term
